@@ -1,0 +1,1 @@
+-i "{0}" -i "{1}" -filter_complex "[1:v]scale=1280:720,setdar=16/9 [vmain]; [1:a]volume=1.6 [amain]; [0:v]scale=1280:720,setdar=16/9 [vintro]; [vintro][0:a][vmain][amain]concat=n=2:v=1:a=1" -vcodec libx264 -preset superfast {2}

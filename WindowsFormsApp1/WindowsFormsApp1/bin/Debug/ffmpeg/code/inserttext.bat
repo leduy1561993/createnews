@@ -1,0 +1,1 @@
+ffmpeg -i D:\\youtubeauto\\WindowsFormsApp1\\WindowsFormsApp1\\bin\\Debug\\tieudechuatext.mp4 -filter:v "drawtext=box=1:fontfile=D:/youtubeauto/WindowsFormsApp1/WindowsFormsApp1/bin/Debug/ffmpeg/duy.ttf:text ='This example command will  a white background':fontcolor=white: fontsize=50: boxcolor=black@0.5:boxborderw=5:x=(w-text_w)/2:y=(h-text_h-line_h)/2" -codec:a copy tieude.mp4

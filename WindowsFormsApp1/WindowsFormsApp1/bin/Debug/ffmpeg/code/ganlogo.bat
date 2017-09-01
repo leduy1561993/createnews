@@ -1,0 +1,1 @@
+ffmpeg -i logo.png -i out.mp4 -filter_complex overlay=main_w-overlay_w-5:5 -codec:a copy outVideoKassss.mp4

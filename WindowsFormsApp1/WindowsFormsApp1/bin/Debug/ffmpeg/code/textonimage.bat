@@ -1,0 +1,1 @@
+ffmpeg -i test.mp4 -ss 00:00:18.00 -vframes 1 outaaaaaaaaaaaaaaa.png

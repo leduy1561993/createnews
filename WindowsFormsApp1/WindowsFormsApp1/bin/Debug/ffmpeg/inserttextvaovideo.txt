@@ -1,0 +1,1 @@
+-y -i "{0}" -vf drawtext="fontfile=/path/to/font.ttf: text="{1}": fontcolor=white: fontsize=24: box=1: boxcolor=black@0.5: boxborderw=5: x=(w-text_w)/5: y=(h-text_h)/5"  -codec:a copy tile.mp4

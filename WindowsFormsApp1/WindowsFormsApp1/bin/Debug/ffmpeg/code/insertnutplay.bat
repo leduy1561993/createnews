@@ -1,0 +1,2 @@
+ffmpeg -i outaaaaaaaaaaaaaaa.png -i logo.png -filter_complex overlay=main_w-overlay_w-5:5 -codec:a copy outVideoKasssaaaaaaaaaaaaaaas.png 
+\ ffmpeg -i outVideoKasssaaaaaaaaaaaaaaas.png -i play.png -filter_complex overlay=main_w-overlay_w-5:5 -codec:a copy outVideoKasssaaaaaaaaaaaaaaas111111111.png

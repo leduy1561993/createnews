@@ -1,0 +1,1 @@
+ffmpeg  -i IMG.Jpeg -i logo.png -filter_complex overlay=main_w-overlay_w-10:10 -codec:a copy IMGLGerqweaa.Jpeg

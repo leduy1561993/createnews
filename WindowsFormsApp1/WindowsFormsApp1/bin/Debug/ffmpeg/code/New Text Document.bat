@@ -1,0 +1,1 @@
+ffmpeg -loop 1 -i IMG.jpg -i MP3.mp3 -c:v libx264 -s 1280x720 -c:a copy -shortest out.mp4

@@ -1,0 +1,1 @@
+ffmpeg -i intro.mp4 -vf "[in]drawtext=fontfile=duy.ttf: text='The ruling also orders Google to end its anti-competitive practices within 90 days or ': fontcolor=white: fontsize=35: box=1: boxcolor=black@0.5: boxborderw=5: x=(w-text_w)/2: y=120:enable='between(t,0,30)'[out]" -codec:a copy asdfqwhegfuyqgwegfyqg.mp4
