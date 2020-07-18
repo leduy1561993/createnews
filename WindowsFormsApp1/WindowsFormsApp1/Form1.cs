@@ -66,12 +66,12 @@ namespace WindowsFormsApp1
                 "http://www.politico.com/rss/defense.xml",
                 "http://www.politico.com/rss/economy.xml",
                 "http://www.politico.com/rss/energy.xml",
-                "http://www.politico.com/rss/politics08.xml",
+                //"https://rss.politico.com/politics-news.xml",
                 "http://www.washingtontimes.com/rss/headlines/news/politics/"
             };
         static int indexNewsNow = 0;
         static int indexSize = 0;
-        static int numOfNews = 7;
+        static int numOfNews = 6;
         string[] linkArrayLink = new string[80];
         string[] linkArrayLinkBuff3day = new string[300];
 
@@ -194,17 +194,41 @@ namespace WindowsFormsApp1
             readRss();
             //asdfad
         }
+        //su dung lay thong tin politico
+        void readRssPolitico(String url)
+        {
+            StreamReader inStream;
+            WebRequest webRequest;
+            WebResponse webresponse;
+            webRequest = WebRequest.Create("https://www.politico.com/news/2020/06/02/rod-rosenstein-senate-russia-295155");
+            webresponse = webRequest.GetResponse();
+            inStream = new StreamReader(webresponse.GetResponseStream());
+            String textBox = inStream.ReadToEnd();
+                
+            XmlReader reader = XmlReader.Create(url);
+            SyndicationFeed feed = SyndicationFeed.Load(reader);
+            reader.Close();
+            if (feed != null && feed.Items != null && feed.Items.Count() > 0)
+            {
+                SyndicationItem item = feed.Items.ElementAt(0);
+                if (item.Links != null && item.Links.Count > 0 && item.Links[0].Uri != null && item.Links[0].Uri.AbsoluteUri != null)
+                {
+
+                }
+            }
+        }
 
         //can 1 mang lon de kiem tra bai da dang hay chua
         void readRss()
         {
-            string[] linkArrayCongress = new string[10];
-            string[] linkArrayHealcare = new string[10];
-            string[] linkArrayDefense = new string[10];
-            string[] linkArrayEconomy = new string[10];
-            string[] linkArrayEnergy = new string[10];
-            string[] linkArrayPolotics = new string[10];
-            string[] linkArraywashington = new string[20];
+            readRssPolitico("https://www.politico.com/news/2020/06/02/rod-rosenstein-senate-russia-295155");
+            string[] linkArrayCongress = new string[15];
+            string[] linkArrayHealcare = new string[15];
+            string[] linkArrayDefense = new string[15];
+            string[] linkArrayEconomy = new string[15];
+            string[] linkArrayEnergy = new string[15];
+            string[] linkArrayPolotics = new string[15];
+            string[] linkArraywashington = new string[15];
             for (int i = 0; i < numOfNews; i++)
             {
                 int type = (i + 1) % numOfNews;
@@ -214,32 +238,38 @@ namespace WindowsFormsApp1
                 reader.Close();
                 foreach (SyndicationItem item in feed.Items)
                 {
-                    String linkAdd = item.Id;
-                    switch (type)
+                    if(item.Links !=null && item.Links.Count>0 && item.Links[0].Uri !=null && item.Links[0].Uri.AbsoluteUri != null)
                     {
-                        case 1:
-                            linkArrayCongress[index++] = linkAdd;
+                        String linkAdd = item.Links[0].Uri.AbsoluteUri;
+                        switch (type)
+                        {
+                            case 1:
+                                linkArrayCongress[index++] = linkAdd;
+                                break;
+                            case 2:
+                                linkArrayHealcare[index++] = linkAdd;
+                                break;
+                            case 3:
+                                linkArrayDefense[index++] = linkAdd;
+                                break;
+                            case 4:
+                                linkArrayEconomy[index++] = linkAdd;
+                                break;
+                            case 5:
+                                linkArrayEnergy[index++] = linkAdd;
+                                break;
+                            case 6:
+                                linkArrayPolotics[index++] = linkAdd;
+                                break;
+                            case 0:
+                                linkArraywashington[index++] = linkAdd;
+                                break;
+                        }
+                        if (index > 14)
+                        {
                             break;
-                        case 2:
-                            linkArrayHealcare[index++] = linkAdd;
-                            break;
-                        case 3:
-                            linkArrayDefense[index++] = linkAdd;
-                            break;
-                        case 4:
-                            linkArrayEconomy[index++] = linkAdd;
-                            break;
-                        case 5:
-                            linkArrayEnergy[index++] = linkAdd;
-                            break;
-                        case 6:
-                            linkArrayPolotics[index++] = linkAdd;
-                            break;
-                        case 0:
-                            linkArraywashington[index++] = linkAdd;
-                            break;
+                        }
                     }
-
                     //kiem tra da co chua, neu chua thi add vao mang
                     
                 }
@@ -247,7 +277,7 @@ namespace WindowsFormsApp1
 
             //tao mang bai bao hom nay
             //linkArrayLink
-            int length = 20;
+            int length = 15;
             var chooseArr = 0;
             for (int i = 0; i < length; i++)
             {
