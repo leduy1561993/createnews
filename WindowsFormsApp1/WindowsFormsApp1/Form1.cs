@@ -21,6 +21,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace WindowsFormsApp1
 {
@@ -61,17 +62,17 @@ namespace WindowsFormsApp1
         // xu ly load bai nao
        
 
-        string[] url = { "http://www.politico.com/rss/congress.xml" ,
-                "http://www.politico.com/rss/healthcare.xml",
-                "http://www.politico.com/rss/defense.xml",
-                "http://www.politico.com/rss/economy.xml",
-                "http://www.politico.com/rss/energy.xml",
-                //"https://rss.politico.com/politics-news.xml",
-                "http://www.washingtontimes.com/rss/headlines/news/politics/"
+        string[] url = { "http://www.politico.com/rss/congress.xml" , //1
+                "http://www.politico.com/rss/healthcare.xml",//2
+                "http://www.politico.com/rss/defense.xml",//3
+                "http://www.politico.com/rss/economy.xml",//4
+                "http://www.politico.com/rss/energy.xml",//5
+                "https://rss.politico.com/politics-news.xml",//6
+                "http://www.washingtontimes.com/rss/headlines/news/politics/"//7
             };
         static int indexNewsNow = 0;
         static int indexSize = 0;
-        static int numOfNews = 6;
+        static int numOfNews = 7;
         string[] linkArrayLink = new string[80];
         string[] linkArrayLinkBuff3day = new string[300];
 
@@ -197,31 +198,51 @@ namespace WindowsFormsApp1
         //su dung lay thong tin politico
         void readRssPolitico(String url)
         {
-            StreamReader inStream;
-            WebRequest webRequest;
-            WebResponse webresponse;
-            webRequest = WebRequest.Create("https://www.politico.com/news/2020/06/02/rod-rosenstein-senate-russia-295155");
-            webresponse = webRequest.GetResponse();
-            inStream = new StreamReader(webresponse.GetResponseStream());
-            String textBox = inStream.ReadToEnd();
+            //StreamReader inStream;
+            //WebRequest webRequest;
+            //WebResponse webresponse;
+            //webRequest = WebRequest.Create("https://www.politico.com/news/2020/06/02/rod-rosenstein-senate-russia-295155");
+            //webresponse = webRequest.GetResponse();
+            //inStream = new StreamReader(webresponse.GetResponseStream());
+            //String textBox = inStream.ReadToEnd();
                 
-            XmlReader reader = XmlReader.Create(url);
+            //XmlReader reader = XmlReader.Create(url);
+            //SyndicationFeed feed = SyndicationFeed.Load(reader);
+            //reader.Close();
+            //if (feed != null && feed.Items != null && feed.Items.Count() > 0)
+            //{
+            //    SyndicationItem item = feed.Items.ElementAt(0);
+            //    if (item.Links != null && item.Links.Count > 0 && item.Links[0].Uri != null && item.Links[0].Uri.AbsoluteUri != null)
+            //    {
+
+            //    }
+            //}
+
+            string url1 = "https://rss.politico.com/politics-news.xml";
+            XmlReader reader = XmlReader.Create(url1);
             SyndicationFeed feed = SyndicationFeed.Load(reader);
             reader.Close();
-            if (feed != null && feed.Items != null && feed.Items.Count() > 0)
+            foreach (SyndicationItem item in feed.Items)
             {
-                SyndicationItem item = feed.Items.ElementAt(0);
-                if (item.Links != null && item.Links.Count > 0 && item.Links[0].Uri != null && item.Links[0].Uri.AbsoluteUri != null)
+                String subject = item.Title.Text;
+                String summary = item.Summary.Text;
+                StringBuilder sb = new StringBuilder();
+                foreach (SyndicationElementExtension extension in item.ElementExtensions)
                 {
-
+                    XElement ele = extension.GetObject<XElement>();
+                    if (ele.Name.LocalName == "encoded" && ele.Name.Namespace.ToString().Contains("content"))
+                    {
+                        sb.Append(ele.Value + "<br/>");
+                    }
                 }
-            }
+                String subject11 = item.Title.Text;
+            }   
         }
 
         //can 1 mang lon de kiem tra bai da dang hay chua
         void readRss()
         {
-            readRssPolitico("https://www.politico.com/news/2020/06/02/rod-rosenstein-senate-russia-295155");
+            //readRssPolitico("https://www.politico.com/news/2020/06/02/rod-rosenstein-senate-russia-295155");
             string[] linkArrayCongress = new string[15];
             string[] linkArrayHealcare = new string[15];
             string[] linkArrayDefense = new string[15];
